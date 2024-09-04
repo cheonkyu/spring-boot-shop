@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import app.shop.controller.dto.ProductDto;
+import app.shop.controller.dto.OrderItemDto;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;

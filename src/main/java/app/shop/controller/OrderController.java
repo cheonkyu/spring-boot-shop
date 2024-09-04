@@ -5,14 +5,16 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import app.shop.controller.dto.ProductDto;
+import app.shop.controller.dto.CreateOrderDto;
+import app.shop.controller.dto.OrderItemDto;
 import app.shop.core.BaseController;
-import app.shop.domain.entity.Product;
-import app.shop.domain.service.ProductService;
+import app.shop.domain.service.OrderService;
 import app.shop.utils.excel.Column;
 import app.shop.utils.excel.ExcelManager;
 import app.shop.utils.validation.Validator;
@@ -20,10 +22,11 @@ import lombok.RequiredArgsConstructor;
 
 
 @RestController
+@RequestMapping("/order")
 @RequiredArgsConstructor
-public class ProductController extends BaseController {
+public class OrderController extends BaseController {
 
-    private final ProductService productService;
+    private final OrderService orderService;
 
     @GetMapping("/ping")
     public String ping() {
@@ -33,9 +36,11 @@ public class ProductController extends BaseController {
         return "pong";
     }
 
-    @GetMapping("/ping1")
-    public String ping1() {
-        // productService
+    @PostMapping()
+    public String createOrder(@RequestBody CreateOrderDto createOrderDto) {
+        // orderService.createOrder();
+        logger.info("{}", createOrderDto);
+        orderService.createOrder(createOrderDto);
         return "pong";
     }
 
@@ -45,7 +50,7 @@ public class ProductController extends BaseController {
         columns.add(new Column("상품명", "key"));
         columns.add(new Column("상품별 주문 수량", "count"));
         
-        ExcelManager excelManager = new ExcelManager(ProductDto.class, columns);
+        ExcelManager excelManager = new ExcelManager(OrderItemDto.class, columns);
         List<?> test = excelManager
             .upload(file)
             .parse();
