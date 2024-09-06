@@ -29,6 +29,13 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("io.micrometer:micrometer-tracing-bridge-brave")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework:spring-jdbc:6.1.12")
+
+	// implementation("org.mybatis:mybatis-spring:1.2.4")
+	// implementation("org.mybatis:mybatis:3.3.1")
+	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3")
+	implementation("org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16")
+	
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("com.h2database:h2")

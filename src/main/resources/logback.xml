@@ -1,0 +1,21 @@
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{yyyyMMdd HH:mm:ss.SSS} [%thread] %-3level %logger{5} - %msg %n</pattern>
+    </encoder>
+  </appender>
+  
+  <logger name="jdbc" level="debug"/>
+  
+  <logger name="jdbc.sqlonly" level="debug" />
+  <logger name="jdbc.sqltiming" level="debug" />
+  <logger name="jdbc.audit" level="debug" />
+  <logger name="jdbc.resultset" level="debug" />
+  <logger name="jdbc.resultsettable" level="debug" />
+  <logger name="jdbc.connection" level="debug" />
+  
+  <root level="INFO">
+    <appender-ref ref="STDOUT" />
+  </root>
+  
+</configuration>

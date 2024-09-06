@@ -10,14 +10,12 @@ import lombok.Setter;
 @Data
 public class OrdererDto {
     private String name;
-    private String address1;
-    private String address2;
+    private String address;
 
     public Orderer toEntity() {
         return Orderer.builder()
                 .name(name)
-                .address1(address1)
-                .address2(address2)
+                .address(address)
                 .build();
     }
 }

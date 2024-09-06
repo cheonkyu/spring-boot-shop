@@ -1,4 +1,6 @@
 spring:
+  exception:
+    debug: false
   h2:
     console:
       enabled: true
@@ -19,3 +21,6 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

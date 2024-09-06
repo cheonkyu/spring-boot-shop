@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="app.shop.domain.repository.mapper.BulkInsertMapper">
+    <insert id="insertItem" useGeneratedKeys="true" keyColumn="ID" keyProperty="id"> 
+        MERGE INTO t_item AS target
+        USING (
+            VALUES 
+                (#{id}, #{name})
+        ) AS source (id, name)
+        ON target.id = source.id
+        WHEN MATCHED THEN 
+            UPDATE SET
+                name = source.name,
+                UPDATED_AT = NOW()
+        WHEN NOT MATCHED THEN 
+            INSERT (id, name, deleted, CREATED_AT, UPDATED_AT)
+            VALUES (source.id, source.name, false, NOW(), NOW())
+    </insert>
+
+    <insert id="insertOrderer" parameterType="app.shop.domain.repository.mapper.dto.OrdererBulkDto" useGeneratedKeys="true" keyColumn="ID" keyProperty="id"> 
+         INSERT INTO
+            T_ORDERER
+            (
+                NAME
+                , ADDRESS
+                , DELETED
+                , CREATED_AT
+                , UPDATED_AT
+            ) VALUES
+            (
+                #{name}
+                , #{address}
+                , FALSE
+                , NOW()
+                , NOW()
+            )
+    </insert>
+
+    <insert id="insertOrderItem" useGeneratedKeys="true" keyColumn="ID" keyProperty="id"> 
+        INSERT INTO
+            T_ORDER_ITEM
+            (
+                ITEM_ID
+                , ORDER_ID
+                , COUNT
+            ) VALUES
+            (
+                #{itemId}
+                , #{orderId}
+                , #{count}
+            )
+    </insert>
+
+    <insert id="insertOrder" useGeneratedKeys="true" keyColumn="ID" keyProperty="id"> 
+        INSERT INTO 
+            T_ORDER 
+            (
+                ORDER_ID
+                , ORDERER_ID
+            ) VALUES
+            (
+                #{orderId}
+                , #{ordererId}
+            )
+    </insert>
+</mapper>

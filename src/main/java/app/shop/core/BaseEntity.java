@@ -16,17 +16,17 @@ import jakarta.persistence.*;
 public abstract class BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long id;
+    protected Long id;
     
     @Column(columnDefinition = "boolean default false")
-    private Boolean deleted;
+    protected Boolean deleted;
 
     // private String createdBy;
     // private String updatedBy;
 
     @CreatedDate
-    private LocalDateTime createdAt;
+    protected LocalDateTime createdAt;
 
     @LastModifiedDate
-    private LocalDateTime updatedAt;
+    protected LocalDateTime updatedAt;
 }

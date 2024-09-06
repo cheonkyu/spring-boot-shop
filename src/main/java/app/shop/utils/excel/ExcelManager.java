@@ -1,17 +1,12 @@
 package app.shop.utils.excel;
 
-import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
 import org.springframework.web.multipart.MultipartFile;
-
-import app.shop.controller.dto.OrderItemDto;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -36,7 +31,6 @@ public class ExcelManager {
     this.clazz = clazz;
     this.columns = columns;
   }
-
 
   private String getCellValue(final Cell cell) {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -76,7 +70,7 @@ public class ExcelManager {
       return value;
   }
 
-	public ExcelManager upload(MultipartFile file) {
+	public ExcelManager loadExcel(MultipartFile file) {
         final String fileExtsn = FilenameUtils.getExtension(file.getOriginalFilename()); // 파일 Original 이름 불러오기 ex) 전문가.xlsx
         
         Workbook workbook = null;
@@ -101,7 +95,7 @@ public class ExcelManager {
                 final int columnSize = this.columns.size();
                 final Map<String, String> cellData = new HashMap<>();
                 for(int j = 0; j < columnSize; j++) {
-                  final Cell cell = row.getCell(j + 1);
+                  final Cell cell = row.getCell(j);
                   if (cell == null) {
                     continue;
                   }
@@ -109,7 +103,7 @@ public class ExcelManager {
                   final String value = this.getCellValue(cell);
                   final Column column = this.columns.get(j);
 
-
+                  // System.out.println(column.getKey() + ":" +  value);
                   cellData.put(column.getKey(), value);
                 }
                 data.add(cellData);
@@ -121,9 +115,7 @@ public class ExcelManager {
             
         } catch (Exception e) {
           System.out.println(e.toString());
-          // throw new BizException(e);
           return this;
-
         } 
     }
 
