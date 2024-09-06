@@ -30,6 +30,8 @@ dependencies {
 	implementation("io.micrometer:micrometer-tracing-bridge-brave")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework:spring-jdbc:6.1.12")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
+	implementation("io.springfox:springfox-swagger-ui:3.0.0")
 
 	// implementation("org.mybatis:mybatis-spring:1.2.4")
 	// implementation("org.mybatis:mybatis:3.3.1")
