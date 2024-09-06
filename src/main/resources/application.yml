@@ -18,6 +18,10 @@ spring:
     properties:
       hibernate:
         format_sql: true # 실행되는 query를 보여줌
+    
+  redis:
+    host: localhost
+    port: 6379
 
 logging.level:
   org.hibernate.SQL: debug

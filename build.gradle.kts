@@ -32,7 +32,10 @@ dependencies {
 	implementation("org.springframework:spring-jdbc:6.1.12")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
 	implementation("io.springfox:springfox-swagger-ui:3.0.0")
-
+	
+	// redis
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+	implementation("org.redisson:redisson-spring-boot-starter:3.27.0")
 	// implementation("org.mybatis:mybatis-spring:1.2.4")
 	// implementation("org.mybatis:mybatis:3.3.1")
 	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3")

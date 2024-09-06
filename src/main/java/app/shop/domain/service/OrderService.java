@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import app.shop.controller.dto.BulkInsertOrderDto;
 import app.shop.controller.dto.CreateOrderDto;
 import app.shop.core.BaseService;
+import app.shop.core.lock.RedissonLock;
 import app.shop.domain.entity.Order;
 import app.shop.domain.repository.OrderRepository;
 import app.shop.domain.repository.mapper.BulkInsertMapper;
@@ -29,6 +30,8 @@ import app.shop.utils.excel.ExcelManager;
 public class OrderService extends BaseService {
     private final OrderRepository orderRepository;
     private final SqlSessionFactory sqlSessionFactory;
+
+    private final String LOCK = "order";
 
     @Transactional
     public CreateOrderDto.Response createOrder(CreateOrderDto.Request createOrderDto) {
@@ -83,6 +86,7 @@ public class OrderService extends BaseService {
         return result;
     }
 
+    @RedissonLock(value = LOCK)
     private boolean bulkInsertData(List<ItemBulkDto> items, List<OrdererBulkDto> orderers) {
         // 배치로 여러 건 동시에 등록
         try(final SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH)) {
