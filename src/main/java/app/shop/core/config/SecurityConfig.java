@@ -15,8 +15,8 @@ public class SecurityConfig {
             .headers(headers -> {
                 headers
                     .frameOptions(frameOptions -> frameOptions.sameOrigin())
-                    .xssProtection(xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
-                    .contentSecurityPolicy(csp -> csp.policyDirectives("script-src 'self'"));
+                    .xssProtection(xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK));
+                    // .contentSecurityPolicy(csp -> csp.policyDirectives("script-src 'self'"));
             });
 
         return http.build();

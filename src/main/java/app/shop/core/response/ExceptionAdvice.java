@@ -20,9 +20,10 @@ public class ExceptionAdvice {
             null,
             new ResponseError(
                 500,
-                isDebug
-                    ? e.getLocalizedMessage()
-                    : "잠시 후에 다시 시도해주세요."
+                e.getMessage()
+                // isDebug
+                //     ? e.getLocalizedMessage()
+                //     : "잠시 후에 다시 s시도해주세요."
             )
         );
     }

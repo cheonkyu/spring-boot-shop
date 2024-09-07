@@ -9,6 +9,8 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 import app.shop.core.BaseEntity;
+import app.shop.domain.vo.Address;
+import app.shop.domain.vo.OrdererName;
 import jakarta.persistence.*;
 
 @Getter
@@ -19,18 +21,20 @@ import jakarta.persistence.*;
 @SQLRestriction("deleted = false")
 public class Orderer extends BaseEntity {
 
+    @Embedded
     @Column(nullable = false)
-    private String name;
+    private OrdererName name;
 
+    @Embedded
     @Column(nullable = false)
-    private String address;
+    private Address address;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDER_ID")
     private Order order;
     
     @Builder
-    public Orderer(String name, String address) {
+    public Orderer(OrdererName name, Address address) {
         this.name = name;
         this.address = address;
     }

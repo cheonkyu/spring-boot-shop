@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import app.shop.core.BaseEntity;
+import app.shop.domain.vo.OrderItemCount;
 import jakarta.persistence.*;
 
 @Getter
@@ -20,7 +21,8 @@ import jakarta.persistence.*;
 public class OrderItem extends BaseEntity {
 
     @Column(nullable = false)
-    private Long count;
+    @Embedded
+    private OrderItemCount count;
 
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "ITEM_ID")
@@ -31,7 +33,7 @@ public class OrderItem extends BaseEntity {
     private Order order;
     
     @Builder
-    public OrderItem(Long count, Item item) {
+    public OrderItem(OrderItemCount count, Item item) {
         this.count = count;
         this.item = item;
     }

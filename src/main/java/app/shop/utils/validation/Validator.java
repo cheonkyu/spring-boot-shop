@@ -7,7 +7,7 @@ public class Validator {
         if(supplier == null) {
             return;
         }
-        if(condition) {
+        if(!condition) {
             throw supplier.get();
         }
     }
@@ -16,7 +16,7 @@ public class Validator {
         if(supplier == null) {
             return;
         }
-        if(condition) {
+        if(!condition) {
             throw supplier.get();
         }
     }

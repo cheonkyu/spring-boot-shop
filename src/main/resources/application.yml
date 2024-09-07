@@ -1,6 +1,6 @@
 spring:
   exception:
-    debug: false
+    debug: true
   h2:
     console:
       enabled: true
