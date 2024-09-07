@@ -1,13 +1,10 @@
 package app.shop.utils.excel;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
-@AllArgsConstructor
-public class Column {
-    private String fieldName;
-    private String key;
+public record Column(
+    String fieldName,
+    String key
+) {
+    public static Column of(String fieldName, String key) {
+        return new Column(fieldName, key);
+    }
 }

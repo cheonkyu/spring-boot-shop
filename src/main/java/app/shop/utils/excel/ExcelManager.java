@@ -103,8 +103,7 @@ public class ExcelManager {
                   final String value = this.getCellValue(cell);
                   final Column column = this.columns.get(j);
 
-                  // System.out.println(column.getKey() + ":" +  value);
-                  cellData.put(column.getKey(), value);
+                  cellData.put(column.key(), value);
                 }
                 data.add(cellData);
               }

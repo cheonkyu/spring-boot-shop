@@ -1,6 +1,7 @@
 package app.shop.domain.entity;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -20,12 +21,10 @@ import jakarta.persistence.*;
 @SQLRestriction("deleted = false")
 public class Order extends BaseEntity {
 
-    @ToString.Exclude
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "order")
-    private List<OrderItem> orderItems;
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems = new ArrayList<OrderItem>();
 
-    @ToString.Exclude
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "ORDERER_ID")
     private Orderer orderer;
 
@@ -33,5 +32,9 @@ public class Order extends BaseEntity {
     public Order(List<OrderItem> orderItems, Orderer orderer) {
         this.orderItems = orderItems;
         this.orderer = orderer;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 }

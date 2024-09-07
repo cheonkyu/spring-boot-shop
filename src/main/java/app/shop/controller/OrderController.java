@@ -1,6 +1,5 @@
 package app.shop.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +11,6 @@ import app.shop.controller.dto.BulkInsertOrderDto;
 import app.shop.controller.dto.CreateOrderDto;
 import app.shop.core.BaseController;
 import app.shop.domain.service.OrderService;
-import app.shop.utils.validation.Validator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

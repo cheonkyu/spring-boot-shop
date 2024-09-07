@@ -24,11 +24,9 @@ public class Item extends BaseEntity {
     @Embedded
     private ItemName name;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ORDER_ITEM_ID")
-    @ToString.Exclude
-    private OrderItem orderItems;
-    
+    @OneToOne(mappedBy = "item")
+    private OrderItem orderItem;
+
     @Builder
     public Item(Long id, ItemName name) {
         this.id = id;

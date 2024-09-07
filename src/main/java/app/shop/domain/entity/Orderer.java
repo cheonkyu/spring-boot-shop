@@ -29,8 +29,7 @@ public class Orderer extends BaseEntity {
     @Column(nullable = false)
     private Address address;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ORDER_ID")
+    @OneToOne(mappedBy = "orderer")
     private Order order;
     
     @Builder

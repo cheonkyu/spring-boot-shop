@@ -8,6 +8,15 @@ public class BulkInsertOrderDto {
         String ordererName,
         String ordererAddress
     ) {
+        public static Request of(
+            String itemId,
+            String itemName,
+            String orderCount,
+            String ordererName,
+            String ordererAddress
+        ) {
+            return new Request(itemId, itemName, orderCount, ordererName, ordererAddress);
+        }
     }
 
 

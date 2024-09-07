@@ -3,6 +3,7 @@ package app.shop.controller.dto;
 import java.util.List;
 
 import app.shop.domain.entity.Order;
+import app.shop.domain.entity.OrderItem;
 
 public class CreateOrderDto{
     public record Request(
@@ -11,15 +12,19 @@ public class CreateOrderDto{
         OrdererDto orderer
     ){
         public Order toEntity() {
-            return Order.builder()
-                    .orderItems(
-                        items
-                            .stream()
-                            .map(OrderItemDto::toEntity)
-                            .toList()
-                    )
-                    .orderer(orderer.toEntity())
-                    .build();
+            Order order = Order
+                .builder()
+                .orderer(orderer.toEntity())
+                .build();
+            List<OrderItem> orderItems = items
+                    .stream()
+                    .map(OrderItemDto::toEntity)
+                    .toList();
+            order.setOrderItems(orderItems);
+            for(OrderItem orderItem: orderItems) {
+                orderItem.setOrder(order);
+            }
+            return order;
         }
     }
 

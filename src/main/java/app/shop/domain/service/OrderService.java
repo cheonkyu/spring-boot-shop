@@ -24,6 +24,7 @@ import app.shop.domain.repository.mapper.dto.ItemBulkDto;
 import app.shop.domain.repository.mapper.dto.OrdererBulkDto;
 import app.shop.utils.excel.Column;
 import app.shop.utils.excel.ExcelManager;
+import app.shop.utils.validation.Validator;
 
 @RequiredArgsConstructor
 @Service
@@ -35,21 +36,28 @@ public class OrderService extends BaseService {
 
     @Transactional
     public CreateOrderDto.Response createOrder(CreateOrderDto.Request createOrderDto) {
-        Order order = createOrderDto.toEntity();
-        orderRepository.save(order);
+        Validator.require(createOrderDto != null, () -> "잠시 후 다시 시도해주세요.");
 
-        final boolean isSuccess = true;
-        final CreateOrderDto.Response result = CreateOrderDto.response(isSuccess);
-        return result;
+        try {
+            Order order = createOrderDto.toEntity();
+            order = orderRepository.save(order);
+            
+            final boolean isSuccess = true;
+            final CreateOrderDto.Response result = CreateOrderDto.response(isSuccess);
+            return result;
+        } catch(Exception e) {
+            logger.error("{}", e);
+            return CreateOrderDto.response(false);
+        }
     }
 
     public BulkInsertOrderDto.Response bulkInsertOrder(MultipartFile file) {
         final List<Column> columns = new ArrayList<>();
-        columns.add(new Column("상품명", "itemName"));
-        columns.add(new Column("상품키", "itemId"));
-        columns.add(new Column("상품별 주문 수량", "orderCount"));
-        columns.add(new Column("주문자명", "ordererName"));
-        columns.add(new Column("주문자주소", "ordererAddress"));
+        columns.add(Column.of("상품명", "itemName"));
+        columns.add(Column.of("상품키", "itemId"));
+        columns.add(Column.of("상품별 주문 수량", "orderCount"));
+        columns.add(Column.of("주문자명", "ordererName"));
+        columns.add(Column.of("주문자주소", "ordererAddress"));
         
         final ExcelManager excelManager = new ExcelManager(BulkInsertOrderDto.Request.class, columns);
         final List<BulkInsertOrderDto.Request> rows = excelManager

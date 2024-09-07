@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -29,4 +30,15 @@ public abstract class BaseEntity {
 
     @LastModifiedDate
     protected LocalDateTime updatedAt;
+
+    @PrePersist
+    public void prePersisit() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }
