@@ -67,35 +67,25 @@ public class OrderService extends BaseService {
             .map(x -> (BulkInsertOrderDto.Request)x)
             .collect(Collectors.toList());
 
-        final List<ItemBulkDto> items = rows
+        logger.info("rows: {}", rows);
+        final List<Order> orders = rows
             .stream()
-            .map(x -> {
-                return ItemBulkDto
-                    .builder()
-                    .id(Long.parseLong(x.itemId()))
-                    .name(x.itemName())
-                    .build();
-            })
+            .map(x -> x.toEntity())
             .collect(Collectors.toList());
 
-        final List<OrdererBulkDto> orderers = rows
-            .stream()
-            .map(x -> {
-                return OrdererBulkDto
-                    .builder()
-                    .name(x.ordererName())
-                    .address(x.ordererAddress())
-                    .build();
-            })
-            .collect(Collectors.toList());
-
-        final boolean isSuccess = bulkInsertData(items, orderers);
+        final boolean isSuccess = bulkInsertData(orders);
         final BulkInsertOrderDto.Response result = BulkInsertOrderDto.response(isSuccess);
         return result;
     }
 
     @RedissonLock(value = LOCK)
-    private boolean bulkInsertData(List<ItemBulkDto> items, List<OrdererBulkDto> orderers) {
+    private boolean bulkInsertData( List<Order> orders) {
+        orderRepository.saveAll(orders);
+        return true;
+    }
+
+    @RedissonLock(value = LOCK)
+    private boolean bulkInsertRawQueryData(List<ItemBulkDto> items, List<OrdererBulkDto> orderers) {
         // 배치로 여러 건 동시에 등록
         try(final SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH)) {
             final BulkInsertMapper mapper = sqlSession.getMapper(BulkInsertMapper.class);
