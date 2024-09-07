@@ -1,7 +1,6 @@
 package app.shop.domain.entity;
 
-import java.util.List;
-
+import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -28,7 +27,7 @@ public class OrderItem extends BaseEntity {
     private Item item;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ORDER_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ORDER_ID")
     private Order order;
     
     @Builder

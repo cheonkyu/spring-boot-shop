@@ -19,7 +19,7 @@ public abstract class BaseEntity {
     protected Long id;
     
     @Column(columnDefinition = "boolean default false")
-    protected Boolean deleted;
+    protected Boolean deleted = false;
 
     // private String createdBy;
     // private String updatedBy;

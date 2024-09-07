@@ -25,7 +25,6 @@ public class Item extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDER_ITEM_ID")
     @ToString.Exclude
-    // @JoinColumn(name = "ORDER_ITEM_ID", insertable = false, updatable = false)
     private OrderItem orderItems;
     
     @Builder

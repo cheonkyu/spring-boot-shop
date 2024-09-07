@@ -21,12 +21,11 @@ import jakarta.persistence.*;
 public class Order extends BaseEntity {
 
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinColumn(name = "ORDER_ID")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
     private List<OrderItem> orderItems;
 
     @ToString.Exclude
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDERER_ID")
     private Orderer orderer;
 
