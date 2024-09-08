@@ -22,9 +22,6 @@ public abstract class BaseEntity {
     @Column(columnDefinition = "boolean default false")
     protected Boolean deleted = false;
 
-    // private String createdBy;
-    // private String updatedBy;
-
     @CreatedDate
     protected LocalDateTime createdAt;
 

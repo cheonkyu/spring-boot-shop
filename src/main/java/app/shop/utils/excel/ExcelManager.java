@@ -32,6 +32,10 @@ public class ExcelManager {
     this.columns = columns;
   }
 
+  public List<Map<String, String>> getData() {
+    return this.data;
+  }
+  
   private String getCellValue(final Cell cell) {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
