@@ -1,8 +1,10 @@
 # spring-boot-shop
 
-## ERD
-
-![ERD](./assets/shop-erd.png)
+- redis를 이용한 분산락 적용
+- JPA 기반 주문 정보 등록 API 개발
+- Junit 테스트 코드 작성
+- Advice와 유효형체크 에러처리
+- record 기반 dto, vo
 
 ## 개발 포인트
 
@@ -71,7 +73,17 @@ public class Validator {
 }
 ```
 
-## 실행
+## ERD
+
+![ERD](./assets/shop-erd.png)
+
+## H2 Console 접속
+
+http://localhost:8080/h2-console/
+id: sa
+password: 
+
+## 코드 실행
 
 ```
 $ git clone https://github.com/cheonkyu/spring-boot-shop
@@ -122,14 +134,31 @@ Server: Docker Engine - Community
   GitCommit:        de40ad0
 ```
 
-## API
+## API 명세
 
 ### 단건 주문 등록
 
 POST http://localhost:8080/order
 
-#### 요청
+```sh
+curl --location 'localhost:8080/order' \
+--header 'Content-Type: application/json' \
+--data '{
+    "items": [
+        {
+            "name": "아이폰",
+            "count": 1
+        }
+    ],
+    "orderer": {
+        "name": "kim",
+        "address": "1"
+    }
+}'
 ```
+
+#### 요청
+```json
 {
     "items": [
         {
@@ -146,7 +175,7 @@ POST http://localhost:8080/order
 
 #### 응답
 
-```
+```json
 {
     "status": 200,
     "data": {
@@ -157,6 +186,13 @@ POST http://localhost:8080/order
 ```
 
 ### 엑셀 다건 주문 등록
+
+POST http://localhost:8080/order/excel/bulk-insert
+
+```sh
+$ curl --location 'localhost:8080/order/excel/bulk-insert' \
+--form 'file=@"/path/to/file"'
+```
 
 #### 응답
 
